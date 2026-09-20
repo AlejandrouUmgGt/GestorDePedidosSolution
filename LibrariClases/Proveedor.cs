@@ -6,6 +6,8 @@ namespace LibreriaClases
     /// </summary>
     public class Proveedor : Persona
     {
+        
+        public int Numero { get; internal set; }
         public string Nit { get; set; }
         public string NombreComercial { get; set; }
         public string DireccionFiscal { get; set; }
@@ -13,6 +15,7 @@ namespace LibreriaClases
 
         public Proveedor() : base()
         {
+            Numero = 0;
             Nit = string.Empty;
             NombreComercial = string.Empty;
             DireccionFiscal = string.Empty;
@@ -31,7 +34,7 @@ namespace LibreriaClases
 
         public override string ToString()
         {
-            return $"{NombreComercial} (NIT: {Nit}) - Contacto: {NombreCompleto}";
+            return $"#{Numero} - {NombreComercial} (NIT: {Nit}) - Contacto: {NombreCompleto}";
         }
     }
 }

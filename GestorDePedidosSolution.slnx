@@ -1,3 +1,8 @@
 <Solution>
-  <Project Path="LibrariClases/LibrariClases.csproj" />
+  <Folder Name="/Backend/">
+    <Project Path="LibrariClases/LibrariClases.csproj" />
+  </Folder>
+  <Folder Name="/Fontend/">
+    <Project Path="GestionPedidos/GestionPedidos.csproj" Id="8f54f0ea-4bbe-472d-9b82-789aa5306bf1" />
+  </Folder>
 </Solution>

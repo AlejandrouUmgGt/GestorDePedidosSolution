@@ -11,6 +11,7 @@ namespace LibreriaClases
 
         private readonly List<Proveedor> proveedores;
         private readonly List<Pedido> pedidos;
+        private int siguienteNumeroProveedor = 1;
         private int siguienteNumeroPedido = 1;
 
         public GestorPedidos()
@@ -33,18 +34,36 @@ namespace LibreriaClases
             if (proveedores.Any(p => p.CUI == proveedor.CUI))
                 throw new InvalidOperationException($"Ya existe un proveedor con el CUI '{proveedor.CUI}'.");
 
+            proveedor.Numero = siguienteNumeroProveedor++;
             proveedores.Add(proveedor);
         }
 
         public bool EliminarProveedor(string cui)
         {
             var proveedor = BuscarProveedorPorCui(cui);
+            if (proveedor is not null && pedidos.Any(p => p.Proveedor.CUI == cui))
+                throw new InvalidOperationException("No se puede eliminar un proveedor que tiene pedidos registrados.");
+
             return proveedor is not null && proveedores.Remove(proveedor);
+        }
+
+        /// <summary>Elimina un producto siempre que no esté incluido en un pedido registrado.</summary>
+        public bool EliminarProducto(string codigo)
+        {
+            if (pedidos.Any(p => p.Detalles.Any(d => d.Producto.Codigo == codigo)))
+                throw new InvalidOperationException("No se puede eliminar un producto incluido en un pedido registrado.");
+
+            return Catalogo.EliminarProducto(codigo);
         }
 
         public Proveedor? BuscarProveedorPorCui(string cui)
         {
             return proveedores.FirstOrDefault(p => p.CUI == cui);
+        }
+
+        public Proveedor? BuscarProveedorPorNumero(int numero)
+        {
+            return proveedores.FirstOrDefault(p => p.Numero == numero);
         }
 
         // ---------- Pedidos ----------
